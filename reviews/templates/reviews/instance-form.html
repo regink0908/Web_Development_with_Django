@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block title %}
+{% if instance %}
+Редактирование {{ model_type }} {{ instance }}
+{% else %}
+Новый {{ model_type }}
+{% endif %}
+{% endblock %}
+
+{% block content %}
+<h2>
+    {% if instance %}
+    Редактирование {{ model_type }} {{ instance }}
+    {% else %}
+    Новый {{ model_type }}
+    {% endif %}
+</h2>
+{% if related_instance %}
+<p>For {{related_model_type}} <em>{{related_instance}}</em></p>
+{% endif %}
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">
+        {% if instance %}Сохранить{% else %}Создать{% endif %}
+    </button>
+</form>
+{% endblock %}

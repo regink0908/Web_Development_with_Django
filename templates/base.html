@@ -1,0 +1,60 @@
+<!doctype html>
+{% load static %}
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href='{% static "bootstrap/css/bootstrap.min.css" %}'/>
+
+    <link rel="stylesheet" href='{% static "css/font-awesome.min.css" %}'>
+
+    <title>{% block title %}Рецензии к книгам{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <link rel="stylesheet" href="{% static 'css/fonts.css' %}">
+  </head>
+  <body>
+  <nav class="navbar navbar-expand-sm navbar-dark bg-dark sticky-top">
+      <a class="navbar-brand" href="/">{% block brand %}<img src="{% static 'logo.png' %}">{% endblock %}</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="/books/">Домашняя <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Выход</a>
+          </li>
+        </ul>
+        <form action="{% url 'book_search' %}" class="form-inline my-2 my-lg-0">
+            {% csrf_token %}
+          <input class="form-control mr-sm-2" type="search" placeholder="Поиск" aria-label="Search" name="search"
+          value="{{ search_text }}" minlength="3">
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Поиск</button>
+        </form>
+      </div>
+    </nav>
+  <div class="container-fluid">
+      <div class="alert alert-{% if message.level_tag == 'error' %}danger{% else %}{ {message.level_tag }}{% endif %}"
+            role="alert">
+          {{ message }}
+      </div>
+     {% block content %}
+      <h1>Добро пожаловать в Bookr!</h1>
+      {% endblock %}
+  </div>
+  <!-- Copyright -->
+  <footer class="page-footer font-small blue">
+    <div class="footer-copyright text-center py-3">© 2024 Copyright:
+      <a href="https://www.packtpub.com"> ReGiNa Publications</a>
+      <p>Website by: ReGiNa</p>
+      <p>Contact information: <a href="mailto:farhutdinova_rn@tatneft.ru">farhutdinova_rn@tatneft.ru</a></p>
+    </div>
+  </footer>
+  <!-- Copyright -->
+  </body>
+</html>

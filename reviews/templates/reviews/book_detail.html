@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block content %}
+      <br>
+      <h3>Сведения о книге</h3>
+      <hr>
+      <span class="text-info">Название: </span> <span>{{ book.title }}</span>
+      <br>
+      <span class="text-info">Издатель: </span><span>{{ book.publisher }}</span>
+      <br>
+      <span class="text-info">Дата публикации: </span><span>{{ book.publication_date }}</span>
+      <br>
+      {% if not reviews %}
+            <hr>
+            <h3>Будьте первым, кто напишет отзыв</h3>
+      {% else %}
+            <span class="text-info">Общая оценка: </span><span class="badge badge-primary badge-pill">{{ book_rating }}</span>
+            <br>
+            <hr>
+            <h3>Комментарии к обзору</h3>
+            <ul>
+            {% for review in reviews %}
+                  <li class="list-group-item">
+                        <span class="text-info">Комментарий к обзору: </span> <span>{{ review.content }}</span>
+                        <br>
+                        <span class="text-info">Дата создания: </span><span>{{ review.date_created }}</span>
+                        <br>
+                        <span class="text-info">Дата редактирования: </span><span>{{ review.date_edited }}</span>
+                        <br>
+                        <span class="text-info">Рейтинг: </span><span class="badge badge-secondary badge-pill">{{ review.rating }}</span>
+                        <br>
+                        <span class="text-info">Автор: </span><span>{{ review.creator.username }}</span>
+                        <br>
+                        <a href="{% url 'review_edit' book.pk review.pk %}">Редактировать</a>
+                  </li>
+            {% endfor %}
+            </ul>
+      {% endif %}
+<a class="btn btn-primary" href="{% url 'review_create' book.pk %}">Добавить отзыв</a>
+{% endblock %}

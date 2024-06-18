@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block title %}
+    {% if form.is_valid and search_text %}
+    Результат поиска по "{{ search_text }}"
+    {% else %}
+    Поиск книг
+    {% endif %}
+{% endblock %}
+{% block content %}
+<h2>Поиск книг</h2>
+<form>
+     {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Поиск</button>
+</form>
+{% if form.is_valid and search_text %}
+<h3>Результат поиска для <em>{{ search_text }}</em></h3>
+<ul class="list-group">
+    {% for book in books %}
+    <li class="list-group-item">
+        <span class="text-info">Наименование: </span>
+        <a href="{% url 'book_detail' book.pk %}">{{ book }}</a>
+        <br/>
+        <span class="text-info">Автор, редактор, соавтор: </span>
+        {% for contributor in book.contributors.all %}
+        {{ contributor.first_names }} {{ contributor.last_names }}
+        {% if not forloop.last %}, {% endif %}
+        {% endfor %}
+    </li>
+    {% empty %}
+    <li class="list-group-item">Нет результатов поиска</li>
+    {% endfor %}
+</ul>
+{% endif %}
+{% endblock %}
